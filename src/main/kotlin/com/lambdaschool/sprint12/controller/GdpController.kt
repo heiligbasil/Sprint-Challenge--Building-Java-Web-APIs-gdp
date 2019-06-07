@@ -108,7 +108,7 @@ class GdpController
         return ResponseEntity(gdp, HttpStatus.OK)
     }
 
-    //localhost:2020/gdp/economy/table
+    // localhost:2020/gdp/economy/table
     @GetMapping(value = ["/economy/table"], produces = ["application/json"])
     fun displayGdpTable(request: HttpServletRequest): ModelAndView
     {
@@ -116,7 +116,7 @@ class GdpController
         logger.info(messageLog)
 
         val gdpList: MutableList<Gdp> = Sprint12Application.getOurGdpList().gdpList
-        gdpList.sortBy { it.gdp }
+        gdpList.sortByDescending { it.gdp }
 
         val mav = ModelAndView()
         mav.viewName = "gdp"
