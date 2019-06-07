@@ -1,5 +1,6 @@
 package com.lambdaschool.sprint12.handler
 
+import com.lambdaschool.sprint12.exception.ResourceNotFoundException
 import com.lambdaschool.sprint12.model.ErrorDetail
 import org.slf4j.LoggerFactory
 import org.springframework.beans.TypeMismatchException
@@ -20,7 +21,7 @@ class RestExceptionHandler : ResponseEntityExceptionHandler()
 {
     companion object
     {
-        private val loggerFactory = LoggerFactory.getLogger(DogController::class.java)
+        private val loggerFactory = LoggerFactory.getLogger(GdpController::class.java)
     }
 
     @ExceptionHandler(ResourceNotFoundException::class)
