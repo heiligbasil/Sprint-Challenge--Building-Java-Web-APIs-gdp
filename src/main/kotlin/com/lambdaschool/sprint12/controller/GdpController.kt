@@ -168,4 +168,27 @@ class GdpController
 
         return mav
     }
+
+    // localhost:2020/gdp/list/a/z
+    @GetMapping(value = ["/list/{gdpStart}/{gdpEnd}"], produces = ["application/json"])
+    fun displaySpecificGdpsTable(request: HttpServletRequest, @PathVariable gdpStart: Long, @PathVariable gdpEnd: Long): ModelAndView
+    {
+        val messageLog: String = "${request.requestURI} accessed with $gdpStart to $gdpEnd on ${LocalDateTime.now()}"
+        logger.info(messageLog)
+
+        val gdpListSubset: MutableList<Gdp> = mutableListOf();
+
+        Sprint12Application.getOurGdpList().gdpList.forEach {
+            if (it.gdp >= gdpStart && it.gdp <= gdpEnd)
+            {
+                gdpListSubset.add(it)
+            }
+        }
+
+        val mav = ModelAndView()
+        mav.viewName = "gdp"
+        mav.addObject("gdpList", gdpListSubset.sortedBy { it.countryName })
+
+        return mav
+    }
 }
