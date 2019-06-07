@@ -142,4 +142,30 @@ class GdpController
 
         return mav
     }
+
+    // localhost:2020/gdp/names/a/z
+    @GetMapping(value = ["/names/{letterStart}/{letterEnd}"], produces = ["application/json"])
+    fun displaySpecificCountriesTable(request: HttpServletRequest, @PathVariable letterStart: Char, @PathVariable letterEnd: Char): ModelAndView
+    {
+        val messageLog: String = "${request.requestURI} accessed with $letterStart to $letterEnd on ${LocalDateTime.now()}"
+        logger.info(messageLog)
+
+        val gdpListSubset: MutableList<Gdp> = mutableListOf();
+
+        Sprint12Application.getOurGdpList().gdpList.forEach {
+            for (cl in letterStart.toLowerCase()..letterEnd.toLowerCase())
+            {
+                if (it.countryName.toLowerCase().startsWith(cl))
+                {
+                    gdpListSubset.add(it)
+                }
+            }
+        }
+
+        val mav = ModelAndView()
+        mav.viewName = "gdp"
+        mav.addObject("gdpList", gdpListSubset.sortedBy { it.countryName })
+
+        return mav
+    }
 }
