@@ -1,5 +1,6 @@
 package com.lambdaschool.sprint12.model
 
+import com.lambdaschool.sprint12.exception.ValidationError
 import java.text.SimpleDateFormat
 import java.util.*
 
