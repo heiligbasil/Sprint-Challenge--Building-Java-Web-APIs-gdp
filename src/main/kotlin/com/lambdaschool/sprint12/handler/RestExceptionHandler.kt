@@ -1,5 +1,6 @@
 package com.lambdaschool.sprint12.handler
 
+import com.lambdaschool.sprint12.controller.GdpController
 import com.lambdaschool.sprint12.exception.ResourceNotFoundException
 import com.lambdaschool.sprint12.model.ErrorDetail
 import org.slf4j.LoggerFactory
