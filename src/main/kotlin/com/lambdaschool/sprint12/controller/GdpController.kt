@@ -108,6 +108,24 @@ class GdpController
         return ResponseEntity(gdp, HttpStatus.OK)
     }
 
+    // localhost:2020/gdp/total
+    @GetMapping(value = ["/total"], produces = ["application/json"])
+    fun getTotalGdp(request: HttpServletRequest): ResponseEntity<*>
+    {
+        val messageLog: String = "${request.requestURI} accessed on ${LocalDateTime.now()}"
+        logger.info(messageLog)
+
+        var gdpSum: Long = 0;
+        Sprint12Application.getOurGdpList().gdpList.forEach { gdpSum += it.gdp }
+
+        if (gdpSum == 0L)
+        {
+            throw ResourceNotFoundException("No total GDP to display")
+        }
+
+        return ResponseEntity(Gdp("Total GDP", gdpSum), HttpStatus.OK)
+    }
+
     // localhost:2020/gdp/economy/table
     @GetMapping(value = ["/economy/table"], produces = ["application/json"])
     fun displayGdpTable(request: HttpServletRequest): ModelAndView
